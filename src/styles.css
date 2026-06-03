@@ -890,3 +890,338 @@ h1, h2, h3, p { margin: 0; }
   .care-grid, .platform-strip { grid-template-columns: 1fr; }
   .catalog .section-head h2::after { display: block; margin-top: 6px; white-space: normal; }
 }
+
+/* Account and admin dashboards */
+.account-section,
+.admin-section {
+  margin-top: 34px;
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid rgba(86, 56, 22, 0.10);
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(245, 223, 180, 0.34), transparent 32%),
+    rgba(255, 255, 255, 0.74);
+  box-shadow: 0 22px 70px rgba(78, 53, 20, 0.08);
+  scroll-margin-top: 110px;
+}
+
+.admin-section {
+  background:
+    radial-gradient(circle at 90% 0%, rgba(209, 154, 46, 0.16), transparent 34%),
+    rgba(255, 253, 248, 0.84);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 22px 0;
+}
+
+.dashboard-card {
+  min-height: 106px;
+  padding: 20px;
+  border: 1px solid rgba(86, 56, 22, 0.10);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 18px 44px rgba(78, 53, 20, 0.06);
+}
+
+.dashboard-card strong {
+  display: block;
+  color: #2a1b12;
+  font-family: 'Unbounded', 'Manrope', sans-serif;
+  font-size: clamp(24px, 3vw, 34px);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.dashboard-card span {
+  color: #6f665e;
+  font-size: 14px;
+}
+
+.account-list,
+.admin-list {
+  display: grid;
+  gap: 16px;
+}
+
+.account-ad-card {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  overflow: hidden;
+  border: 1px solid rgba(86, 56, 22, 0.10);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 20px 54px rgba(78, 53, 20, 0.08);
+}
+
+.account-ad-card > img {
+  width: 100%;
+  height: 100%;
+  min-height: 190px;
+  object-fit: cover;
+}
+
+.account-ad-card__body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.account-ad-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.account-ad-card h3 {
+  margin: 0 0 4px;
+  color: #2a1b12;
+  font-size: 20px;
+}
+
+.account-ad-card p {
+  margin: 0;
+  color: #6f665e;
+}
+
+.account-ad-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.account-ad-meta span {
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: #fff7e7;
+  color: #5f4b2f;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.account-ad-note {
+  line-height: 1.6;
+}
+
+.account-ad-actions,
+.edit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.moderation-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.moderation-badge.pending {
+  color: #9a6711;
+  background: #fff1cf;
+}
+
+.moderation-badge.approved {
+  color: #2c7a3e;
+  background: #e9f8ec;
+}
+
+.moderation-badge.rejected {
+  color: #a23b32;
+  background: #ffe8e4;
+}
+
+.soft-btn,
+.danger-btn,
+.approve-btn,
+.reject-btn {
+  min-height: 42px;
+  border: 0;
+  border-radius: 999px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.soft-btn {
+  color: #6b4a16;
+  background: #fff1d2;
+}
+
+.approve-btn {
+  color: #fff;
+  background: linear-gradient(135deg, #3f8f4f, #60b46f);
+}
+
+.reject-btn {
+  color: #7d3f16;
+  background: #ffe0bd;
+}
+
+.danger-btn {
+  color: #fff;
+  background: linear-gradient(135deg, #a23b32, #d06454);
+}
+
+.soft-btn:hover,
+.danger-btn:hover,
+.approve-btn:hover,
+.reject-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(78, 53, 20, 0.12);
+}
+
+.empty-state {
+  padding: 36px;
+  border: 1px dashed rgba(86, 56, 22, 0.18);
+  border-radius: 28px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.64);
+  color: #6f665e;
+}
+
+.empty-state svg {
+  color: #d19a2e;
+}
+
+.empty-state h3 {
+  margin: 12px 0 8px;
+  color: #2a1b12;
+}
+
+.empty-state .primary-btn {
+  margin-top: 14px;
+}
+
+.edit-form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid rgba(86, 56, 22, 0.12);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 20px 54px rgba(78, 53, 20, 0.08);
+}
+
+.edit-form__head {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.edit-form__head h3 {
+  margin: 0;
+}
+
+.edit-form label {
+  display: grid;
+  gap: 7px;
+}
+
+.edit-form label span {
+  color: #6f665e;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.edit-form input,
+.edit-form select {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid rgba(86, 56, 22, 0.12);
+  border-radius: 16px;
+  padding: 0 14px;
+  outline: none;
+  background: rgba(255, 253, 248, 0.9);
+  color: #2a1b12;
+  font: inherit;
+}
+
+.edit-form input:focus,
+.edit-form select:focus {
+  border-color: rgba(209, 154, 46, 0.62);
+  box-shadow: 0 0 0 4px rgba(209, 154, 46, 0.12);
+}
+
+.edit-form .wide {
+  grid-column: span 2;
+}
+
+.admin-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0 22px;
+}
+
+.admin-toolbar button {
+  border: 1px solid rgba(86, 56, 22, 0.12);
+  border-radius: 999px;
+  min-height: 42px;
+  padding: 0 16px;
+  background: rgba(255, 255, 255, 0.78);
+  color: #6f665e;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.admin-toolbar button.active {
+  color: #fff;
+  border-color: transparent;
+  background: linear-gradient(135deg, #d19a2e, #b97713);
+  box-shadow: 0 14px 28px rgba(185, 119, 19, 0.18);
+}
+
+@media (max-width: 980px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .edit-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .account-ad-card {
+    grid-template-columns: 1fr;
+  }
+
+  .account-ad-card > img {
+    height: 230px;
+  }
+
+  .account-ad-card__top,
+  .edit-form__head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dashboard-grid,
+  .edit-form {
+    grid-template-columns: 1fr;
+  }
+
+  .edit-form .wide {
+    grid-column: auto;
+  }
+}
