@@ -5,6 +5,9 @@ import {
   Baby,
   Bone,
   Camera,
+  BookOpen,
+  CheckCircle2,
+  ClipboardCheck,
   ChevronDown,
   ChevronRight,
   Dumbbell,
@@ -13,6 +16,7 @@ import {
   Home,
   Info,
   ListChecks,
+  Clock3,
   MapPin,
   Menu,
   MessageCircle,
@@ -22,9 +26,11 @@ import {
   ShieldCheck,
   SlidersHorizontal,
   Sparkles,
+  Star,
   Stethoscope,
   UploadCloud,
   UserRound,
+  Users,
   WalletCards,
   X,
 } from 'lucide-react';
@@ -86,123 +92,6 @@ const breedImages = {
   'Хаски': 'https://images.unsplash.com/photo-1605568427561-40dd23c2acea?auto=format&fit=crop&w=400&q=80',
 };
 
-const initialPuppies = [
-  {
-    id: 1,
-    name: 'Луна',
-    breed: 'Лабрадор ретривер',
-    city: 'Москва',
-    sex: 'Сука',
-    age: '2 месяца',
-    weight: '3.8 кг',
-    height: '28 см',
-    color: 'Кремовый',
-    temperament: 'Ласковая, спокойная',
-    documents: 'РКФ, ветпаспорт, прививки',
-    kennel: 'Royal Gold Home',
-    price: '95 000 ₽',
-    status: 'Свободен',
-    phone: '+7 999 111-22-33',
-    telegram: '@royalgoldhome',
-    image: 'https://images.unsplash.com/photo-1601979031925-424e53b6caaa?auto=format&fit=crop&w=900&q=85',
-  },
-  {
-    id: 2,
-    name: 'Марс',
-    breed: 'Вельш-корги пемброк',
-    city: 'Санкт-Петербург',
-    sex: 'Кобель',
-    age: '2.5 месяца',
-    weight: '4.1 кг',
-    height: '25 см',
-    color: 'Рыже-белый',
-    temperament: 'Активный, контактный',
-    documents: 'Щенячья метрика, ветпаспорт',
-    kennel: 'Nord Star Corgi',
-    price: '120 000 ₽',
-    status: 'Свободен',
-    phone: '+7 999 222-33-44',
-    telegram: '@nordstar',
-    image: 'https://images.unsplash.com/photo-1612536057832-2ff7ead58194?auto=format&fit=crop&w=900&q=85',
-  },
-  {
-    id: 3,
-    name: 'Бруно',
-    breed: 'Померанский шпиц',
-    city: 'Казань',
-    sex: 'Кобель',
-    age: '3 месяца',
-    weight: '1.4 кг',
-    height: '18 см',
-    color: 'Оранжевый соболь',
-    temperament: 'Уверенный, семейный',
-    documents: 'РКФ, чип, ветпаспорт',
-    kennel: 'Family Spitz',
-    price: '70 000 ₽',
-    status: 'Бронь',
-    phone: '+7 999 333-44-55',
-    telegram: '@familydog',
-    image: 'https://images.unsplash.com/photo-1591769225440-811ad7d6eab3?auto=format&fit=crop&w=900&q=85',
-  },
-  {
-    id: 4,
-    name: 'Мия',
-    breed: 'Французский бульдог',
-    city: 'Сочи',
-    sex: 'Сука',
-    age: '2 месяца',
-    weight: '2.5 кг',
-    height: '21 см',
-    color: 'Палевый',
-    temperament: 'Игривая, смелая',
-    documents: 'Ветпаспорт, прививки',
-    kennel: 'Sunny Frenchies',
-    price: '110 000 ₽',
-    status: 'Свободен',
-    phone: '+7 999 444-55-66',
-    telegram: '@sunnyfrenchies',
-    image: 'https://images.unsplash.com/photo-1583512603805-3cc6b41f3edb?auto=format&fit=crop&w=900&q=85',
-  },
-  {
-    id: 5,
-    name: 'Оскар',
-    breed: 'Немецкая овчарка',
-    city: 'Екатеринбург',
-    sex: 'Кобель',
-    age: '3.5 месяца',
-    weight: '8.2 кг',
-    height: '39 см',
-    color: 'Чепрачный',
-    temperament: 'Умный, охранный',
-    documents: 'РКФ, тесты родителей',
-    kennel: 'Strong Guard Kennel',
-    price: '85 000 ₽',
-    status: 'Свободен',
-    phone: '+7 999 555-66-77',
-    telegram: '@strongguard',
-    image: 'https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?auto=format&fit=crop&w=900&q=85',
-  },
-  {
-    id: 6,
-    name: 'Тесса',
-    breed: 'Йоркширский терьер',
-    city: 'Москва',
-    sex: 'Сука',
-    age: '2 месяца',
-    weight: '900 г',
-    height: '16 см',
-    color: 'Сталь с подпалом',
-    temperament: 'Нежная, ручная',
-    documents: 'Метрика, ветпаспорт',
-    kennel: 'Tiny York Family',
-    price: '78 000 ₽',
-    status: 'Продан',
-    phone: '+7 999 666-77-88',
-    telegram: '@tinyyork',
-    image: 'https://images.unsplash.com/photo-1597633611385-17238892d086?auto=format&fit=crop&w=900&q=85',
-  },
-];
-
 const cities = [
   'Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань', 'Нижний Новгород', 'Челябинск', 'Красноярск', 'Самара', 'Уфа', 'Ростов-на-Дону', 'Краснодар', 'Омск', 'Воронеж', 'Пермь', 'Волгоград', 'Саратов', 'Тюмень', 'Тольятти', 'Ижевск', 'Барнаул', 'Ульяновск', 'Иркутск', 'Хабаровск', 'Ярославль', 'Владивосток', 'Махачкала', 'Томск', 'Оренбург', 'Кемерово', 'Новокузнецк', 'Рязань', 'Астрахань', 'Пенза', 'Сочи'
 ];
@@ -210,10 +99,80 @@ const statuses = ['Свободен', 'Бронь', 'Продан'];
 const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=85';
 const fallbackBreedImage = 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=400&q=80';
 
+const breedIcons = {
+  'Лабрадор ретривер': '🐕',
+  'Французский бульдог': '🥐',
+  'Вельш-корги пемброк': '👑',
+  'Померанский шпиц': '🦊',
+  'Немецкая овчарка': '🛡️',
+  'Йоркширский терьер': '🎀',
+  'Золотистый ретривер': '☀️',
+  'Бигль': '🧭',
+  'Такса': '🌭',
+  'Мопс': '😄',
+  'Чихуахуа': '💎',
+  'Джек-рассел-терьер': '⚡',
+  'Сиба-ину': '🍂',
+  'Хаски': '❄️',
+  'Акита-ину': '⛩️',
+  'Пудель': '✨',
+  'Мальтипу': '🧸',
+  'Кавалер кинг чарльз спаниель': '👒',
+  'Доберман': '♟️',
+  'Ротвейлер': '🏅',
+  'Самоед': '☁️',
+  'Бордер-колли': '🎯',
+  'Кане-корсо': '🗿',
+  'Английский бульдог': '🏛️',
+  'Цвергшнауцер': '🎩',
+  'Бишон фризе': '🫧',
+  'Ши-тцу': '🌸',
+  'Американский булли': '💪',
+  'Русский той': '🔔',
+  'Бернский зенненхунд': '⛰️',
+};
+
+const cityPool = ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань', 'Краснодар', 'Сочи', 'Нижний Новгород', 'Самара', 'Ростов-на-Дону', 'Тюмень', 'Владивосток'];
+const puppyNames = ['Луна', 'Марс', 'Бруно', 'Мия', 'Оскар', 'Тесса', 'Ричи', 'Белла', 'Арчи', 'Нора', 'Тайсон', 'Молли', 'Кай', 'Скай', 'Юки', 'Грей', 'Тедди', 'Лея', 'Рэй', 'Герда', 'Снежок', 'Флэш', 'Барни', 'Бонни', 'Макс', 'Лили', 'Чарли', 'Астра', 'Плюша', 'Берта'];
+const kennelNames = ['Royal Gold Home', 'Sunny Puppy Club', 'Nord Star Kennel', 'Family Dog House', 'Happy Tail', 'Prime Puppies', 'Warm Nose Club', 'City Paws', 'Velvet Paw', 'Dream Breed', 'Smart Puppy', 'Kind Heart Kennel'];
+const colorsByBreed = ['кремовый', 'палевый', 'рыже-белый', 'оранжевый соболь', 'чепрачный', 'сталь с подпалом', 'золотистый', 'триколор', 'мраморный', 'абрикосовый'];
+const temperaments = ['ласковый и спокойный', 'контактный и семейный', 'активный и любознательный', 'уверенный и смелый', 'нежный и ручной', 'умный и обучаемый', 'весёлый и игривый', 'спокойный компаньон'];
+
+function makePuppyFromBreed(breed, index) {
+  const large = breed.size === 'Крупный';
+  const small = breed.size === 'Маленький';
+  const price = small ? 65000 + index * 2200 : large ? 78000 + index * 2600 : 70000 + index * 2400;
+  const ageMonth = index % 4 === 0 ? '2 месяца' : index % 4 === 1 ? '2.5 месяца' : index % 4 === 2 ? '3 месяца' : '3.5 месяца';
+  const weight = small ? `${(1.1 + (index % 6) * 0.4).toFixed(1)} кг` : large ? `${(5.8 + (index % 8) * 0.9).toFixed(1)} кг` : `${(2.8 + (index % 7) * 0.6).toFixed(1)} кг`;
+  const height = small ? `${17 + (index % 8)} см` : large ? `${34 + (index % 10)} см` : `${24 + (index % 9)} см`;
+  return {
+    id: index + 1,
+    name: puppyNames[index] || `Щенок ${index + 1}`,
+    breed: breed.name,
+    city: cityPool[index % cityPool.length],
+    sex: index % 2 === 0 ? 'Сука' : 'Кобель',
+    age: ageMonth,
+    weight,
+    height,
+    color: colorsByBreed[index % colorsByBreed.length],
+    temperament: temperaments[index % temperaments.length],
+    documents: index % 3 === 0 ? 'РКФ, ветпаспорт, прививки' : index % 3 === 1 ? 'Щенячья метрика, ветпаспорт' : 'Ветпаспорт, чип, договор',
+    kennel: kennelNames[index % kennelNames.length],
+    price: `${price.toLocaleString('ru-RU')} ₽`,
+    status: index % 9 === 4 ? 'Бронь' : index % 13 === 8 ? 'Продан' : 'Свободен',
+    phone: `+7 999 ${String(100 + index).padStart(3, '0')}-${String(20 + index).padStart(2, '0')}-${String(30 + index).padStart(2, '0')}`,
+    telegram: `@dreampet_${index + 1}`,
+    image: breedImages[breed.name] || DEFAULT_IMAGE,
+  };
+}
+
+
 function parsePrice(value) {
   const digits = String(value || '').replace(/\D/g, '');
   return digits ? Number(digits) : 0;
 }
+
+const initialPuppies = breedCatalog.map(makePuppyFromBreed);
 
 function Header() {
   return (
@@ -244,7 +203,7 @@ function Header() {
           <a href="#breed-helper">Подобрать породу</a>
           <a href="#how">Как это работает</a>
           <a href="#why">О нас</a>
-          <a href="#blog">Блог</a>
+          <a href="#blog">Гиды</a>
         </nav>
 
         <div className="header-actions">
@@ -415,6 +374,7 @@ function BreedsAndBenefits() {
         <div className="breed-row breed-row--scroll">
           {breedCatalog.map((breed) => (
             <button className="breed-item" type="button" key={breed.name} onClick={() => document.getElementById('breed-helper')?.scrollIntoView({ behavior: 'smooth' })}>
+              <span className="breed-icon" aria-hidden="true">{breedIcons[breed.name] || '🐾'}</span>
               <img src={breedImages[breed.name] || fallbackBreedImage} alt={breed.short} />
               <strong>{breed.short}</strong>
               <span>{breed.count}</span>
@@ -452,7 +412,7 @@ function PuppyCard({ puppy, onOpen }) {
 
       <div className="puppy-body">
         <div className="puppy-title">
-          <div><h3>{puppy.name}</h3><p>{puppy.breed}</p></div>
+          <div><h3>{puppy.name}</h3><p><span className="inline-breed-icon">{breedIcons[puppy.breed] || '🐾'}</span>{puppy.breed}</p></div>
           <strong>{puppy.price}</strong>
         </div>
         <div className="puppy-meta">
@@ -606,9 +566,75 @@ function KennelForm({ onAdd }) {
   );
 }
 
+
+function GuidesSection() {
+  const choiceGuides = [
+    ['01', 'Выбор породы под образ жизни', 'Сравните размер, активность, опыт владельца и условия дома. Так вы не выбираете только по фото, а находите собаку, которая реально подходит семье.'],
+    ['02', 'Проверка питомника', 'Запрашивайте документы родителей, ветпаспорт, договор, условия брони и актуальные фото щенка. В Dream Pet карточка уже подталкивает к прозрачности.'],
+    ['03', 'Первый месяц дома', 'Подготовьте лежанку, миски, корм, безопасную зону, игрушки и план адаптации. Первые недели важнее любых аксессуаров.'],
+  ];
+  const careGuides = [
+    [Stethoscope, 'Здоровье', 'Прививки по возрасту, обработка от паразитов, ветпаспорт и план первого визита к ветеринару.'],
+    [Bone, 'Питание', 'Плавный переход на новый корм за 7–10 дней, контроль веса и понятный режим кормления.'],
+    [Dumbbell, 'Активность', 'Короткие регулярные прогулки, игры на контакт и нагрузка по возрасту, а не “до усталости”.'],
+    [BookOpen, 'Воспитание', 'Имя, место, туалет, мягкие правила дома и первые команды через похвалу и стабильный режим.'],
+  ];
+
+  return (
+    <section className="guides-section" id="blog">
+      <div className="section-head section-head--stacked">
+        <div>
+          <span className="eyebrow"><BookOpen size={15} /> Гиды Dream Pet</span>
+          <h2>Полноценная платформа для выбора, покупки и адаптации щенка</h2>
+        </div>
+        <p>Мы не просто показываем объявления — помогаем будущему владельцу принять спокойное и осознанное решение.</p>
+      </div>
+
+      <div className="guide-layout">
+        <article className="guide-feature">
+          <span className="guide-feature__tag"><Star size={16} /> Рекомендуем начать здесь</span>
+          <h3>Как выбрать щенка, если вы пока не знаете породу</h3>
+          <p>Начните не с названия породы, а с быта: квартира или дом, дети, график прогулок, опыт и ожидания от характера. После этого фильтр Dream Pet покажет подходящие варианты.</p>
+          <div className="guide-checks">
+            <span><CheckCircle2 size={16} /> Подходит для новичков</span>
+            <span><CheckCircle2 size={16} /> Учитывает семью и активность</span>
+            <span><CheckCircle2 size={16} /> Помогает избежать импульсивной покупки</span>
+          </div>
+        </article>
+
+        <div className="guide-cards">
+          {choiceGuides.map(([number, title, text]) => (
+            <article className="guide-card" key={title}>
+              <strong>{number}</strong>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <div className="care-grid">
+        {careGuides.map(([Icon, title, text]) => (
+          <article className="care-card" key={title}>
+            <Icon size={24} />
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </article>
+        ))}
+      </div>
+
+      <div className="platform-strip">
+        <div><Users size={22} /><strong>280+ питомников</strong><span>единый стандарт карточек</span></div>
+        <div><Clock3 size={22} /><strong>Быстрый контакт</strong><span>телефон и Telegram в карточке</span></div>
+        <div><ClipboardCheck size={22} /><strong>Проверка данных</strong><span>документы, статус, актуальность</span></div>
+      </div>
+    </section>
+  );
+}
+
 function App() {
   const [puppies, setPuppies] = useState(() => {
-    const saved = localStorage.getItem('dream-pet-puppies-v4');
+    const saved = localStorage.getItem('dream-pet-puppies-v7');
     return saved ? JSON.parse(saved) : initialPuppies;
   });
   const [filters, setFilters] = useState({ breed: '', city: '', sex: '', maxPrice: '', size: '', activity: '', family: '', experience: '' });
@@ -641,7 +667,7 @@ function App() {
   function addPuppy(puppy) {
     const next = [puppy, ...puppies];
     setPuppies(next);
-    localStorage.setItem('dream-pet-puppies-v4', JSON.stringify(next));
+    localStorage.setItem('dream-pet-puppies-v7', JSON.stringify(next));
     document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' });
   }
 
@@ -665,10 +691,7 @@ function App() {
           </div>
         </section>
         <KennelForm onAdd={addPuppy} />
-        <section className="soft-blog" id="blog">
-          <span className="eyebrow"><Sparkles size={15} /> Полезное</span>
-          <h2>Скоро здесь появятся гиды по выбору щенка, адаптации и уходу</h2>
-        </section>
+        <GuidesSection />
       </div>
       <PuppyModal puppy={selectedPuppy} onClose={() => setSelectedPuppy(null)} />
     </main>
