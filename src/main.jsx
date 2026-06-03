@@ -76,20 +76,36 @@ const breedCatalog = [
 ];
 
 const breedImages = {
-  'Лабрадор ретривер': 'https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=400&q=80',
-  'Французский бульдог': 'https://images.unsplash.com/photo-1583511655826-05700442b31b?auto=format&fit=crop&w=400&q=80',
-  'Вельш-корги пемброк': 'https://images.unsplash.com/photo-1612536057832-2ff7ead58194?auto=format&fit=crop&w=400&q=80',
-  'Померанский шпиц': 'https://images.unsplash.com/photo-1591769225440-811ad7d6eab3?auto=format&fit=crop&w=400&q=80',
-  'Немецкая овчарка': 'https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?auto=format&fit=crop&w=400&q=80',
-  'Йоркширский терьер': 'https://images.unsplash.com/photo-1597633611385-17238892d086?auto=format&fit=crop&w=400&q=80',
-  'Золотистый ретривер': 'https://images.unsplash.com/photo-1633722715463-d30f4f325e24?auto=format&fit=crop&w=400&q=80',
-  'Бигль': 'https://images.unsplash.com/photo-1505628346881-b72b27e84530?auto=format&fit=crop&w=400&q=80',
-  'Такса': 'https://images.unsplash.com/photo-1612195583950-b8fd34c87093?auto=format&fit=crop&w=400&q=80',
-  'Мопс': 'https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=400&q=80',
-  'Чихуахуа': 'https://images.unsplash.com/photo-1605633866920-054c0f7c99fa?auto=format&fit=crop&w=400&q=80',
-  'Джек-рассел-терьер': 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=400&q=80',
-  'Сиба-ину': 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=400&q=80',
-  'Хаски': 'https://images.unsplash.com/photo-1605568427561-40dd23c2acea?auto=format&fit=crop&w=400&q=80',
+  'Лабрадор ретривер': 'https://loremflickr.com/640/640/labrador,puppy,dog?lock=101',
+  'Французский бульдог': 'https://loremflickr.com/640/640/french-bulldog,puppy,dog?lock=102',
+  'Вельш-корги пемброк': 'https://loremflickr.com/640/640/corgi,puppy,dog?lock=103',
+  'Померанский шпиц': 'https://loremflickr.com/640/640/pomeranian,puppy,dog?lock=104',
+  'Немецкая овчарка': 'https://loremflickr.com/640/640/german-shepherd,puppy,dog?lock=105',
+  'Йоркширский терьер': 'https://loremflickr.com/640/640/yorkshire-terrier,puppy,dog?lock=106',
+  'Золотистый ретривер': 'https://loremflickr.com/640/640/golden-retriever,puppy,dog?lock=107',
+  'Бигль': 'https://loremflickr.com/640/640/beagle,puppy,dog?lock=108',
+  'Такса': 'https://loremflickr.com/640/640/dachshund,puppy,dog?lock=109',
+  'Мопс': 'https://loremflickr.com/640/640/pug,puppy,dog?lock=110',
+  'Чихуахуа': 'https://loremflickr.com/640/640/chihuahua,puppy,dog?lock=111',
+  'Джек-рассел-терьер': 'https://loremflickr.com/640/640/jack-russell-terrier,puppy,dog?lock=112',
+  'Сиба-ину': 'https://loremflickr.com/640/640/shiba-inu,puppy,dog?lock=113',
+  'Хаски': 'https://loremflickr.com/640/640/husky,puppy,dog?lock=114',
+  'Акита-ину': 'https://loremflickr.com/640/640/akita,puppy,dog?lock=115',
+  'Пудель': 'https://loremflickr.com/640/640/poodle,puppy,dog?lock=116',
+  'Мальтипу': 'https://loremflickr.com/640/640/maltipoo,puppy,dog?lock=117',
+  'Кавалер кинг чарльз спаниель': 'https://loremflickr.com/640/640/cavalier-king-charles-spaniel,puppy,dog?lock=118',
+  'Доберман': 'https://loremflickr.com/640/640/doberman,puppy,dog?lock=119',
+  'Ротвейлер': 'https://loremflickr.com/640/640/rottweiler,puppy,dog?lock=120',
+  'Самоед': 'https://loremflickr.com/640/640/samoyed,puppy,dog?lock=121',
+  'Бордер-колли': 'https://loremflickr.com/640/640/border-collie,puppy,dog?lock=122',
+  'Кане-корсо': 'https://loremflickr.com/640/640/cane-corso,puppy,dog?lock=123',
+  'Английский бульдог': 'https://loremflickr.com/640/640/english-bulldog,puppy,dog?lock=124',
+  'Цвергшнауцер': 'https://loremflickr.com/640/640/miniature-schnauzer,puppy,dog?lock=125',
+  'Бишон фризе': 'https://loremflickr.com/640/640/bichon-frise,puppy,dog?lock=126',
+  'Ши-тцу': 'https://loremflickr.com/640/640/shih-tzu,puppy,dog?lock=127',
+  'Американский булли': 'https://loremflickr.com/640/640/american-bully,puppy,dog?lock=128',
+  'Русский той': 'https://loremflickr.com/640/640/russian-toy-terrier,puppy,dog?lock=129',
+  'Бернский зенненхунд': 'https://loremflickr.com/640/640/bernese-mountain-dog,puppy,dog?lock=130',
 };
 
 const cities = [
@@ -97,7 +113,7 @@ const cities = [
 ];
 const statuses = ['Свободен', 'Бронь', 'Продан'];
 const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=85';
-const fallbackBreedImage = 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=400&q=80';
+const fallbackBreedImage = 'https://loremflickr.com/640/640/puppy,dog?lock=999';
 
 const breedIcons = {
   'Лабрадор ретривер': '🐕',
