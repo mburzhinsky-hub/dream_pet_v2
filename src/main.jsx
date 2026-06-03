@@ -2,12 +2,17 @@ import React, { useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   BadgeCheck,
+  Baby,
   Bone,
+  Camera,
   ChevronDown,
   ChevronRight,
+  Dumbbell,
   Gift,
   Heart,
   Home,
+  Info,
+  ListChecks,
   MapPin,
   Menu,
   MessageCircle,
@@ -18,6 +23,7 @@ import {
   SlidersHorizontal,
   Sparkles,
   Stethoscope,
+  UploadCloud,
   UserRound,
   WalletCards,
   X,
@@ -30,13 +36,54 @@ const logoSrc = `${BASE}logo.jpg`;
 const heroImage =
   'https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=1600&q=85';
 
+const breedCatalog = [
+  { name: 'Лабрадор ретривер', short: 'Лабрадор', count: '156 щенков', size: 'Крупный', activity: 'Средняя', family: 'С детьми', experience: 'Новичок' },
+  { name: 'Французский бульдог', short: 'Французский бульдог', count: '98 щенков', size: 'Маленький', activity: 'Низкая', family: 'С детьми', experience: 'Новичок' },
+  { name: 'Вельш-корги пемброк', short: 'Корги', count: '87 щенков', size: 'Средний', activity: 'Средняя', family: 'С детьми', experience: 'Новичок' },
+  { name: 'Померанский шпиц', short: 'Шпиц', count: '64 щенка', size: 'Маленький', activity: 'Средняя', family: 'Взрослым', experience: 'Новичок' },
+  { name: 'Немецкая овчарка', short: 'Немецкая овчарка', count: '120 щенков', size: 'Крупный', activity: 'Высокая', family: 'С детьми', experience: 'Опытный' },
+  { name: 'Йоркширский терьер', short: 'Йоркширский терьер', count: '75 щенков', size: 'Маленький', activity: 'Средняя', family: 'Взрослым', experience: 'Новичок' },
+  { name: 'Золотистый ретривер', short: 'Голден ретривер', count: '143 щенка', size: 'Крупный', activity: 'Средняя', family: 'С детьми', experience: 'Новичок' },
+  { name: 'Бигль', short: 'Бигль', count: '82 щенка', size: 'Средний', activity: 'Высокая', family: 'С детьми', experience: 'Новичок' },
+  { name: 'Такса', short: 'Такса', count: '91 щенок', size: 'Маленький', activity: 'Средняя', family: 'Взрослым', experience: 'Новичок' },
+  { name: 'Мопс', short: 'Мопс', count: '58 щенков', size: 'Маленький', activity: 'Низкая', family: 'С детьми', experience: 'Новичок' },
+  { name: 'Чихуахуа', short: 'Чихуахуа', count: '69 щенков', size: 'Маленький', activity: 'Низкая', family: 'Взрослым', experience: 'Новичок' },
+  { name: 'Джек-рассел-терьер', short: 'Джек-рассел', count: '77 щенков', size: 'Маленький', activity: 'Высокая', family: 'Активным', experience: 'Опытный' },
+  { name: 'Сиба-ину', short: 'Сиба-ину', count: '49 щенков', size: 'Средний', activity: 'Средняя', family: 'Взрослым', experience: 'Опытный' },
+  { name: 'Хаски', short: 'Хаски', count: '66 щенков', size: 'Крупный', activity: 'Высокая', family: 'Активным', experience: 'Опытный' },
+  { name: 'Акита-ину', short: 'Акита-ину', count: '38 щенков', size: 'Крупный', activity: 'Средняя', family: 'Взрослым', experience: 'Опытный' },
+  { name: 'Пудель', short: 'Пудель', count: '88 щенков', size: 'Средний', activity: 'Средняя', family: 'С детьми', experience: 'Новичок' },
+  { name: 'Мальтипу', short: 'Мальтипу', count: '54 щенка', size: 'Маленький', activity: 'Низкая', family: 'С детьми', experience: 'Новичок' },
+  { name: 'Кавалер кинг чарльз спаниель', short: 'Кавалер', count: '41 щенок', size: 'Маленький', activity: 'Низкая', family: 'С детьми', experience: 'Новичок' },
+  { name: 'Доберман', short: 'Доберман', count: '35 щенков', size: 'Крупный', activity: 'Высокая', family: 'Активным', experience: 'Опытный' },
+  { name: 'Ротвейлер', short: 'Ротвейлер', count: '29 щенков', size: 'Крупный', activity: 'Средняя', family: 'Взрослым', experience: 'Опытный' },
+  { name: 'Самоед', short: 'Самоед', count: '46 щенков', size: 'Крупный', activity: 'Средняя', family: 'С детьми', experience: 'Новичок' },
+  { name: 'Бордер-колли', short: 'Бордер-колли', count: '52 щенка', size: 'Средний', activity: 'Высокая', family: 'Активным', experience: 'Опытный' },
+  { name: 'Кане-корсо', short: 'Кане-корсо', count: '31 щенок', size: 'Крупный', activity: 'Средняя', family: 'Взрослым', experience: 'Опытный' },
+  { name: 'Английский бульдог', short: 'Английский бульдог', count: '27 щенков', size: 'Средний', activity: 'Низкая', family: 'Взрослым', experience: 'Новичок' },
+  { name: 'Цвергшнауцер', short: 'Цвергшнауцер', count: '44 щенка', size: 'Маленький', activity: 'Средняя', family: 'С детьми', experience: 'Новичок' },
+  { name: 'Бишон фризе', short: 'Бишон фризе', count: '39 щенков', size: 'Маленький', activity: 'Низкая', family: 'С детьми', experience: 'Новичок' },
+  { name: 'Ши-тцу', short: 'Ши-тцу', count: '57 щенков', size: 'Маленький', activity: 'Низкая', family: 'Взрослым', experience: 'Новичок' },
+  { name: 'Американский булли', short: 'Американский булли', count: '33 щенка', size: 'Средний', activity: 'Средняя', family: 'Взрослым', experience: 'Опытный' },
+  { name: 'Русский той', short: 'Русский той', count: '62 щенка', size: 'Маленький', activity: 'Низкая', family: 'Взрослым', experience: 'Новичок' },
+  { name: 'Бернский зенненхунд', short: 'Бернский зенненхунд', count: '24 щенка', size: 'Крупный', activity: 'Средняя', family: 'С детьми', experience: 'Новичок' },
+];
+
 const breedImages = {
-  'Лабрадор': 'https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=400&q=80',
+  'Лабрадор ретривер': 'https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=400&q=80',
   'Французский бульдог': 'https://images.unsplash.com/photo-1583511655826-05700442b31b?auto=format&fit=crop&w=400&q=80',
-  'Корги': 'https://images.unsplash.com/photo-1612536057832-2ff7ead58194?auto=format&fit=crop&w=400&q=80',
-  'Шпиц': 'https://images.unsplash.com/photo-1591769225440-811ad7d6eab3?auto=format&fit=crop&w=400&q=80',
+  'Вельш-корги пемброк': 'https://images.unsplash.com/photo-1612536057832-2ff7ead58194?auto=format&fit=crop&w=400&q=80',
+  'Померанский шпиц': 'https://images.unsplash.com/photo-1591769225440-811ad7d6eab3?auto=format&fit=crop&w=400&q=80',
   'Немецкая овчарка': 'https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?auto=format&fit=crop&w=400&q=80',
   'Йоркширский терьер': 'https://images.unsplash.com/photo-1597633611385-17238892d086?auto=format&fit=crop&w=400&q=80',
+  'Золотистый ретривер': 'https://images.unsplash.com/photo-1633722715463-d30f4f325e24?auto=format&fit=crop&w=400&q=80',
+  'Бигль': 'https://images.unsplash.com/photo-1505628346881-b72b27e84530?auto=format&fit=crop&w=400&q=80',
+  'Такса': 'https://images.unsplash.com/photo-1612195583950-b8fd34c87093?auto=format&fit=crop&w=400&q=80',
+  'Мопс': 'https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=400&q=80',
+  'Чихуахуа': 'https://images.unsplash.com/photo-1605633866920-054c0f7c99fa?auto=format&fit=crop&w=400&q=80',
+  'Джек-рассел-терьер': 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=400&q=80',
+  'Сиба-ину': 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=400&q=80',
+  'Хаски': 'https://images.unsplash.com/photo-1605568427561-40dd23c2acea?auto=format&fit=crop&w=400&q=80',
 };
 
 const initialPuppies = [
@@ -71,7 +118,7 @@ const initialPuppies = [
     color: 'Рыже-белый',
     temperament: 'Активный, контактный',
     documents: 'Щенячья метрика, ветпаспорт',
-    kennel: 'Nord Star Spitz',
+    kennel: 'Nord Star Corgi',
     price: '120 000 ₽',
     status: 'Свободен',
     phone: '+7 999 222-33-44',
@@ -90,7 +137,7 @@ const initialPuppies = [
     color: 'Оранжевый соболь',
     temperament: 'Уверенный, семейный',
     documents: 'РКФ, чип, ветпаспорт',
-    kennel: 'Family Labrador',
+    kennel: 'Family Spitz',
     price: '70 000 ₽',
     status: 'Бронь',
     phone: '+7 999 333-44-55',
@@ -156,18 +203,12 @@ const initialPuppies = [
   },
 ];
 
-const breeds = [
-  ['Лабрадор', '156 щенков'],
-  ['Французский бульдог', '98 щенков'],
-  ['Корги', '87 щенков'],
-  ['Шпиц', '64 щенка'],
-  ['Немецкая овчарка', '120 щенков'],
-  ['Йоркширский терьер', '75 щенков'],
+const cities = [
+  'Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань', 'Нижний Новгород', 'Челябинск', 'Красноярск', 'Самара', 'Уфа', 'Ростов-на-Дону', 'Краснодар', 'Омск', 'Воронеж', 'Пермь', 'Волгоград', 'Саратов', 'Тюмень', 'Тольятти', 'Ижевск', 'Барнаул', 'Ульяновск', 'Иркутск', 'Хабаровск', 'Ярославль', 'Владивосток', 'Махачкала', 'Томск', 'Оренбург', 'Кемерово', 'Новокузнецк', 'Рязань', 'Астрахань', 'Пенза', 'Сочи'
 ];
-
-const cities = ['Москва', 'Санкт-Петербург', 'Казань', 'Сочи', 'Екатеринбург'];
 const statuses = ['Свободен', 'Бронь', 'Продан'];
 const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=85';
+const fallbackBreedImage = 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=400&q=80';
 
 function parsePrice(value) {
   const digits = String(value || '').replace(/\D/g, '');
@@ -179,9 +220,11 @@ function Header() {
     <>
       <div className="top-ad">
         <div className="top-ad__inner">
-          <span className="top-ad__gift"><Gift size={19} /></span>
-          <strong>АКЦИЯ!</strong>
-          <span>Премиум-корм для щенков — скидка 15% для новых владельцев</span>
+          <span className="top-ad__gift"><Gift size={22} /></span>
+          <div className="top-ad__copy">
+            <strong>АКЦИЯ ДЛЯ НОВЫХ ВЛАДЕЛЬЦЕВ</strong>
+            <span>Премиум-корм + консультация кинолога — скидка 15% при выборе щенка на Dream Pet</span>
+          </div>
           <button type="button">Получить скидку</button>
           <X className="top-ad__close" size={18} />
         </div>
@@ -198,7 +241,7 @@ function Header() {
 
         <nav className="main-nav" aria-label="Главная навигация">
           <a href="#catalog">Каталог щенков</a>
-          <a href="#kennels">Питомники</a>
+          <a href="#breed-helper">Подобрать породу</a>
           <a href="#how">Как это работает</a>
           <a href="#why">О нас</a>
           <a href="#blog">Блог</a>
@@ -215,16 +258,20 @@ function Header() {
   );
 }
 
-function FilterPanel({ filters, setFilters }) {
+function FilterPanel({ filters, setFilters, recommendedBreeds }) {
+  function update(key, value) {
+    setFilters({ ...filters, [key]: value });
+  }
+
   return (
     <section className="search-panel" aria-label="Поиск щенка">
       <div className="filter-field">
         <PawPrint size={22} />
         <label>
           <span>Порода</span>
-          <select value={filters.breed} onChange={(e) => setFilters({ ...filters, breed: e.target.value })}>
+          <select value={filters.breed} onChange={(e) => update('breed', e.target.value)}>
             <option value="">Любая порода</option>
-            {[...new Set(initialPuppies.map((p) => p.breed))].map((breed) => <option key={breed}>{breed}</option>)}
+            {breedCatalog.map((breed) => <option key={breed.name} value={breed.name}>{breed.name}</option>)}
           </select>
         </label>
         <ChevronDown size={18} />
@@ -234,7 +281,7 @@ function FilterPanel({ filters, setFilters }) {
         <MapPin size={22} />
         <label>
           <span>Город</span>
-          <select value={filters.city} onChange={(e) => setFilters({ ...filters, city: e.target.value })}>
+          <select value={filters.city} onChange={(e) => update('city', e.target.value)}>
             <option value="">Любой город</option>
             {cities.map((city) => <option key={city}>{city}</option>)}
           </select>
@@ -246,7 +293,7 @@ function FilterPanel({ filters, setFilters }) {
         <Heart size={22} />
         <label>
           <span>Пол</span>
-          <select value={filters.sex} onChange={(e) => setFilters({ ...filters, sex: e.target.value })}>
+          <select value={filters.sex} onChange={(e) => update('sex', e.target.value)}>
             <option value="">Любой</option>
             <option>Сука</option>
             <option>Кобель</option>
@@ -259,12 +306,60 @@ function FilterPanel({ filters, setFilters }) {
         <WalletCards size={22} />
         <label>
           <span>Цена</span>
-          <input value={filters.maxPrice} onChange={(e) => setFilters({ ...filters, maxPrice: e.target.value })} placeholder="до, ₽" inputMode="numeric" />
+          <input value={filters.maxPrice} onChange={(e) => update('maxPrice', e.target.value)} placeholder="до, ₽" inputMode="numeric" />
         </label>
       </div>
 
-      <button className="ghost-filter" type="button"><SlidersHorizontal size={19} /> Ещё фильтры</button>
-      <button className="primary-btn search-btn" type="button"><Search size={20} /> Найти щенка</button>
+      <button className="ghost-filter" type="button" onClick={() => document.getElementById('breed-helper')?.scrollIntoView({ behavior: 'smooth' })}><SlidersHorizontal size={19} /> Подобрать породу</button>
+      <button className="primary-btn search-btn" type="button" onClick={() => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' })}><Search size={20} /> Найти щенка</button>
+
+      <div className="breed-helper" id="breed-helper">
+        <div className="helper-intro">
+          <span><Sparkles size={16} /> Не знаете, какую породу выбрать?</span>
+          <strong>Ответьте на 4 простых вопроса — покажем подходящие варианты.</strong>
+        </div>
+        <label>
+          <span><Home size={16} /> Где будет жить?</span>
+          <select value={filters.size} onChange={(e) => update('size', e.target.value)}>
+            <option value="">Не важно</option>
+            <option value="Маленький">Квартира / небольшой размер</option>
+            <option value="Средний">Квартира или дом</option>
+            <option value="Крупный">Дом / нужен крупный пёс</option>
+          </select>
+        </label>
+        <label>
+          <span><Dumbbell size={16} /> Активность</span>
+          <select value={filters.activity} onChange={(e) => update('activity', e.target.value)}>
+            <option value="">Не важно</option>
+            <option value="Низкая">Спокойный компаньон</option>
+            <option value="Средняя">Прогулки каждый день</option>
+            <option value="Высокая">Спорт, поездки, активная жизнь</option>
+          </select>
+        </label>
+        <label>
+          <span><Baby size={16} /> Семья</span>
+          <select value={filters.family} onChange={(e) => update('family', e.target.value)}>
+            <option value="">Не важно</option>
+            <option value="С детьми">Есть дети</option>
+            <option value="Взрослым">Взрослая семья</option>
+            <option value="Активным">Активный владелец</option>
+          </select>
+        </label>
+        <label>
+          <span><ListChecks size={16} /> Опыт</span>
+          <select value={filters.experience} onChange={(e) => update('experience', e.target.value)}>
+            <option value="">Не важно</option>
+            <option value="Новичок">Первая собака</option>
+            <option value="Опытный">Есть опыт</option>
+          </select>
+        </label>
+        <div className="helper-result">
+          <span>Подходят:</span>
+          {recommendedBreeds.slice(0, 5).map((breed) => (
+            <button type="button" key={breed.name} onClick={() => update('breed', breed.name)}>{breed.short}</button>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
@@ -289,23 +384,13 @@ function Hero() {
         <div className="hero-glow" />
         <img className="hero-dog" src={heroImage} alt="Счастливый щенок Dream Pet" />
         <div className="trust-card trust-card--families">
-          <div className="avatar-stack">
-            <span />
-            <span />
-            <span />
-          </div>
-          <div>
-            <strong>Более 10 000 семей</strong>
-            <small>уже нашли своего друга</small>
-          </div>
+          <div className="avatar-stack"><span /><span /><span /></div>
+          <div><strong>Более 10 000 семей</strong><small>уже нашли своего друга</small></div>
           <Heart size={18} fill="currentColor" />
         </div>
         <div className="trust-card trust-card--verify">
           <ShieldCheck size={22} />
-          <div>
-            <strong>Проверенные заводчики</strong>
-            <small>документы и актуальные карточки</small>
-          </div>
+          <div><strong>Проверенные заводчики</strong><small>документы и актуальные карточки</small></div>
         </div>
       </div>
     </section>
@@ -325,14 +410,14 @@ function BreedsAndBenefits() {
       <div className="panel panel--breeds">
         <div className="section-head">
           <h2>Популярные породы</h2>
-          <a href="#catalog">Смотреть все <ChevronRight size={16} /></a>
+          <a href="#catalog">30 пород <ChevronRight size={16} /></a>
         </div>
-        <div className="breed-row">
-          {breeds.map(([name, count]) => (
-            <button className="breed-item" type="button" key={name}>
-              <img src={breedImages[name]} alt={name} />
-              <strong>{name}</strong>
-              <span>{count}</span>
+        <div className="breed-row breed-row--scroll">
+          {breedCatalog.map((breed) => (
+            <button className="breed-item" type="button" key={breed.name} onClick={() => document.getElementById('breed-helper')?.scrollIntoView({ behavior: 'smooth' })}>
+              <img src={breedImages[breed.name] || fallbackBreedImage} alt={breed.short} />
+              <strong>{breed.short}</strong>
+              <span>{breed.count}</span>
             </button>
           ))}
         </div>
@@ -367,20 +452,12 @@ function PuppyCard({ puppy, onOpen }) {
 
       <div className="puppy-body">
         <div className="puppy-title">
-          <div>
-            <h3>{puppy.name}</h3>
-            <p>{puppy.breed}</p>
-          </div>
+          <div><h3>{puppy.name}</h3><p>{puppy.breed}</p></div>
           <strong>{puppy.price}</strong>
         </div>
-
         <div className="puppy-meta">
-          <span><MapPin size={14} />{puppy.city}</span>
-          <span>{puppy.sex}</span>
-          <span>{puppy.age}</span>
-          <span>{puppy.weight}</span>
+          <span><MapPin size={14} />{puppy.city}</span><span>{puppy.sex}</span><span>{puppy.age}</span><span>{puppy.weight}</span>
         </div>
-
         <p className="temperament">{puppy.temperament}</p>
         <div className="kennel"><Home size={15} /> {puppy.kennel}</div>
         <button className="outline-btn" type="button" onClick={() => onOpen(puppy)}>Подробнее</button>
@@ -392,17 +469,7 @@ function PuppyCard({ puppy, onOpen }) {
 function PuppyModal({ puppy, onClose }) {
   if (!puppy) return null;
   const details = [
-    ['Порода', puppy.breed],
-    ['Город', puppy.city],
-    ['Пол', puppy.sex],
-    ['Возраст', puppy.age],
-    ['Вес', puppy.weight],
-    ['Рост', puppy.height],
-    ['Окрас', puppy.color],
-    ['Темперамент', puppy.temperament],
-    ['Документы', puppy.documents],
-    ['Питомник', puppy.kennel],
-    ['Статус', puppy.status],
+    ['Порода', puppy.breed], ['Город', puppy.city], ['Пол', puppy.sex], ['Возраст', puppy.age], ['Вес', puppy.weight], ['Рост', puppy.height], ['Окрас', puppy.color], ['Темперамент', puppy.temperament], ['Документы', puppy.documents], ['Питомник', puppy.kennel], ['Статус', puppy.status],
   ];
 
   return (
@@ -415,12 +482,7 @@ function PuppyModal({ puppy, onClose }) {
           <h2>{puppy.name}</h2>
           <p className="modal-price">{puppy.price}</p>
           <div className="detail-grid">
-            {details.map(([label, value]) => (
-              <div key={label}>
-                <span>{label}</span>
-                <strong>{value}</strong>
-              </div>
-            ))}
+            {details.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}
           </div>
           <div className="modal-actions">
             <a className="primary-btn" href={`tel:${puppy.phone}`}><Phone size={18} /> Позвонить</a>
@@ -436,9 +498,17 @@ function KennelForm({ onAdd }) {
   const [form, setForm] = useState({
     name: '', breed: '', city: '', sex: 'Сука', age: '', weight: '', height: '', color: '', temperament: '', price: '', status: 'Свободен', documents: '', kennel: '', phone: '', telegram: '', image: '',
   });
+  const [fileName, setFileName] = useState('');
 
-  function update(key, value) {
-    setForm((current) => ({ ...current, [key]: value }));
+  function update(key, value) { setForm((current) => ({ ...current, [key]: value })); }
+
+  function uploadPhoto(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    setFileName(file.name);
+    const reader = new FileReader();
+    reader.onload = () => update('image', reader.result);
+    reader.readAsDataURL(file);
   }
 
   function submit(event) {
@@ -462,11 +532,12 @@ function KennelForm({ onAdd }) {
       image: form.image || DEFAULT_IMAGE,
     };
     onAdd(puppy);
+    setFileName('');
     setForm({ name: '', breed: '', city: '', sex: 'Сука', age: '', weight: '', height: '', color: '', temperament: '', price: '', status: 'Свободен', documents: '', kennel: '', phone: '', telegram: '', image: '' });
   }
 
   const fields = [
-    ['name', 'Кличка'], ['breed', 'Порода'], ['city', 'Город'], ['age', 'Возраст'], ['weight', 'Вес'], ['height', 'Рост'], ['color', 'Окрас'], ['temperament', 'Темперамент'], ['price', 'Цена'], ['documents', 'Документы'], ['kennel', 'Название питомника'], ['phone', 'Телефон'], ['telegram', 'Telegram'], ['image', 'Ссылка на фото'],
+    ['name', 'Кличка'], ['age', 'Возраст'], ['weight', 'Вес'], ['height', 'Рост'], ['color', 'Окрас'], ['temperament', 'Темперамент'], ['price', 'Цена'], ['documents', 'Документы'], ['kennel', 'Название питомника'], ['phone', 'Телефон'], ['telegram', 'Telegram'], ['image', 'Ссылка на фото'],
   ];
 
   return (
@@ -475,14 +546,45 @@ function KennelForm({ onAdd }) {
         <span className="eyebrow"><Bone size={16} /> Для питомников и заводчиков</span>
         <h2>Разместите помёт за несколько минут</h2>
         <p>Покупатели увидят красивую карточку с фото, характеристиками, документами и контактами. Каждый щенок — отдельная понятная карточка.</p>
+        <div className="photo-guide">
+          <h3><Camera size={18} /> Гайд по фото для единого шаблона</h3>
+          <ul>
+            <li>1 главное фото щенка по центру, при дневном свете.</li>
+            <li>Фон чистый: плед, диван, трава или однотонная стена.</li>
+            <li>Без коллажей, водяных знаков, скриншотов и лишнего текста.</li>
+            <li>Лучший формат: горизонтальное фото 4:3 или 16:9, лицо видно полностью.</li>
+          </ul>
+        </div>
         <div className="mini-steps" id="how">
-          <div><strong>01</strong><span>Добавьте данные</span></div>
-          <div><strong>02</strong><span>Проверьте карточку</span></div>
+          <div><strong>01</strong><span>Загрузите фото</span></div>
+          <div><strong>02</strong><span>Заполните шаблон</span></div>
           <div><strong>03</strong><span>Получайте обращения</span></div>
         </div>
       </div>
 
       <form className="kennel-form" onSubmit={submit}>
+        <label className="wide upload-box">
+          <span><UploadCloud size={16} /> Фото щенка с устройства</span>
+          <input type="file" accept="image/*" onChange={uploadPhoto} />
+          <strong>{fileName || 'Нажмите или перетащите фото щенка'}</strong>
+          <small>Фото сохранится в карточке в вашем браузере. Для реального сервера позже подключим загрузку файлов.</small>
+        </label>
+
+        <label>
+          <span>Порода</span>
+          <select value={form.breed} onChange={(e) => update('breed', e.target.value)}>
+            <option value="">Выберите породу</option>
+            {breedCatalog.map((breed) => <option key={breed.name}>{breed.name}</option>)}
+          </select>
+        </label>
+        <label>
+          <span>Город</span>
+          <select value={form.city} onChange={(e) => update('city', e.target.value)}>
+            <option value="">Выберите город</option>
+            {cities.map((city) => <option key={city}>{city}</option>)}
+          </select>
+        </label>
+
         {fields.map(([key, label]) => (
           <label key={key} className={key === 'image' || key === 'temperament' ? 'wide' : ''}>
             <span>{label}</span>
@@ -491,17 +593,13 @@ function KennelForm({ onAdd }) {
         ))}
         <label>
           <span>Пол</span>
-          <select value={form.sex} onChange={(e) => update('sex', e.target.value)}>
-            <option>Сука</option>
-            <option>Кобель</option>
-          </select>
+          <select value={form.sex} onChange={(e) => update('sex', e.target.value)}><option>Сука</option><option>Кобель</option></select>
         </label>
         <label>
           <span>Статус</span>
-          <select value={form.status} onChange={(e) => update('status', e.target.value)}>
-            {statuses.map((status) => <option key={status}>{status}</option>)}
-          </select>
+          <select value={form.status} onChange={(e) => update('status', e.target.value)}>{statuses.map((status) => <option key={status}>{status}</option>)}</select>
         </label>
+        <div className="form-note wide"><Info size={17} /> Все объявления выглядят единообразно: одно фото, единые поля, понятный статус и контакты.</div>
         <button className="primary-btn form-submit" type="submit"><PawPrint size={19} /> Добавить карточку щенка</button>
       </form>
     </section>
@@ -510,25 +608,40 @@ function KennelForm({ onAdd }) {
 
 function App() {
   const [puppies, setPuppies] = useState(() => {
-    const saved = localStorage.getItem('dream-pet-puppies-v3');
+    const saved = localStorage.getItem('dream-pet-puppies-v4');
     return saved ? JSON.parse(saved) : initialPuppies;
   });
-  const [filters, setFilters] = useState({ breed: '', city: '', sex: '', maxPrice: '' });
+  const [filters, setFilters] = useState({ breed: '', city: '', sex: '', maxPrice: '', size: '', activity: '', family: '', experience: '' });
   const [selectedPuppy, setSelectedPuppy] = useState(null);
+
+  const recommendedBreeds = useMemo(() => {
+    const scored = breedCatalog.map((breed) => {
+      let score = 0;
+      if (!filters.size || breed.size === filters.size) score += 1;
+      if (!filters.activity || breed.activity === filters.activity) score += 1;
+      if (!filters.family || breed.family === filters.family) score += 1;
+      if (!filters.experience || breed.experience === filters.experience) score += 1;
+      return { ...breed, score };
+    });
+    return scored.sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+  }, [filters.size, filters.activity, filters.family, filters.experience]);
 
   const filteredPuppies = useMemo(() => puppies.filter((puppy) => {
     const maxPrice = parsePrice(filters.maxPrice);
     const puppyPrice = parsePrice(puppy.price);
+    const hasHelper = filters.size || filters.activity || filters.family || filters.experience;
+    const recommendedNames = new Set(recommendedBreeds.slice(0, 12).map((breed) => breed.name));
     return (!filters.breed || puppy.breed === filters.breed)
       && (!filters.city || puppy.city === filters.city)
       && (!filters.sex || puppy.sex === filters.sex)
-      && (!maxPrice || puppyPrice <= maxPrice);
-  }), [puppies, filters]);
+      && (!maxPrice || puppyPrice <= maxPrice)
+      && (filters.breed || !hasHelper || recommendedNames.has(puppy.breed));
+  }), [puppies, filters, recommendedBreeds]);
 
   function addPuppy(puppy) {
     const next = [puppy, ...puppies];
     setPuppies(next);
-    localStorage.setItem('dream-pet-puppies-v3', JSON.stringify(next));
+    localStorage.setItem('dream-pet-puppies-v4', JSON.stringify(next));
     document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' });
   }
 
@@ -537,7 +650,7 @@ function App() {
       <Header />
       <Hero />
       <div className="page-shell">
-        <FilterPanel filters={filters} setFilters={setFilters} />
+        <FilterPanel filters={filters} setFilters={setFilters} recommendedBreeds={recommendedBreeds} />
         <BreedsAndBenefits />
         <section className="catalog" id="catalog">
           <div className="section-head">
