@@ -8,6 +8,8 @@ import {
   BookOpen,
   CheckCircle2,
   ClipboardCheck,
+  Check,
+  Ban,
   ChevronDown,
   ChevronRight,
   Dumbbell,
@@ -17,6 +19,7 @@ import {
   Info,
   ListChecks,
   Clock3,
+  Edit3,
   MapPin,
   Menu,
   MessageCircle,
@@ -28,10 +31,13 @@ import {
   Sparkles,
   Star,
   Stethoscope,
+  Trash2,
   UploadCloud,
   UserRound,
   Users,
   WalletCards,
+  Save,
+  Send,
   X,
 } from 'lucide-react';
 import './styles.css';
@@ -179,6 +185,10 @@ function makePuppyFromBreed(breed, index) {
     phone: `+7 999 ${String(100 + index).padStart(3, '0')}-${String(20 + index).padStart(2, '0')}-${String(30 + index).padStart(2, '0')}`,
     telegram: `@dreampet_${index + 1}`,
     image: breedImages[breed.name] || DEFAULT_IMAGE,
+    moderationStatus: 'Опубликовано',
+    ownerType: 'demo',
+    createdAt: 'Демо-каталог',
+    updatedAt: '',
   };
 }
 
@@ -218,13 +228,14 @@ function Header() {
           <a href="#catalog">Каталог щенков</a>
           <a href="#breed-helper">Подобрать породу</a>
           <a href="#how">Как это работает</a>
-          <a href="#why">О нас</a>
+          <a href="#cabinet">Мои объявления</a>
+          <a href="#admin">Админ</a>
           <a href="#blog">Гиды</a>
         </nav>
 
         <div className="header-actions">
           <button className="icon-btn" type="button" aria-label="Избранное"><Heart size={20} /></button>
-          <button className="icon-btn" type="button" aria-label="Профиль"><UserRound size={20} /></button>
+          <a className="icon-btn" href="#cabinet" aria-label="Профиль"><UserRound size={20} /></a>
           <a className="primary-btn primary-btn--small" href="#kennels">Разместить щенка</a>
           <button className="mobile-menu" type="button" aria-label="Меню"><Menu size={22} /></button>
         </div>
@@ -506,6 +517,10 @@ function KennelForm({ onAdd }) {
       phone: form.phone || '+7 999 000-00-00',
       telegram: form.telegram || '@dreampet',
       image: form.image || DEFAULT_IMAGE,
+      moderationStatus: 'На модерации',
+      ownerType: 'user',
+      createdAt: new Date().toLocaleString('ru-RU'),
+      updatedAt: '',
     };
     onAdd(puppy);
     setFileName('');
@@ -576,8 +591,196 @@ function KennelForm({ onAdd }) {
           <select value={form.status} onChange={(e) => update('status', e.target.value)}>{statuses.map((status) => <option key={status}>{status}</option>)}</select>
         </label>
         <div className="form-note wide"><Info size={17} /> Все объявления выглядят единообразно: одно фото, единые поля, понятный статус и контакты.</div>
-        <button className="primary-btn form-submit" type="submit"><PawPrint size={19} /> Добавить карточку щенка</button>
+        <button className="primary-btn form-submit" type="submit"><Send size={19} /> Отправить на модерацию</button>
       </form>
+    </section>
+  );
+}
+
+
+
+function ModerationBadge({ value }) {
+  const className = value === 'Опубликовано' ? 'approved' : value === 'Отклонено' ? 'rejected' : 'pending';
+  return <span className={`moderation-badge ${className}`}>{value || 'Опубликовано'}</span>;
+}
+
+function CompactAdCard({ puppy, onOpen, actions }) {
+  return (
+    <article className="account-ad-card">
+      <img src={puppy.image || DEFAULT_IMAGE} alt={`${puppy.name}, ${puppy.breed}`} />
+      <div className="account-ad-card__body">
+        <div className="account-ad-card__top">
+          <div>
+            <h3>{puppy.name}</h3>
+            <p>{puppy.breed} · {puppy.city}</p>
+          </div>
+          <ModerationBadge value={puppy.moderationStatus} />
+        </div>
+        <div className="account-ad-meta">
+          <span>{puppy.sex}</span><span>{puppy.age}</span><span>{puppy.weight}</span><span>{puppy.price}</span>
+        </div>
+        <p className="account-ad-note">{puppy.temperament}</p>
+        <div className="account-ad-actions">
+          <button className="outline-btn" type="button" onClick={() => onOpen(puppy)}>Открыть</button>
+          {actions}
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function MyAccount({ puppies, onUpdate, onDelete, onOpen }) {
+  const myAds = puppies.filter((puppy) => puppy.ownerType === 'user');
+  const [editingId, setEditingId] = useState(null);
+  const [draft, setDraft] = useState(null);
+
+  function startEdit(puppy) {
+    setEditingId(puppy.id);
+    setDraft({ ...puppy, rawPrice: parsePrice(puppy.price) || '' });
+  }
+
+  function updateDraft(key, value) {
+    setDraft((current) => ({ ...current, [key]: value }));
+  }
+
+  function saveDraft(event) {
+    event.preventDefault();
+    const updated = {
+      ...draft,
+      price: draft.rawPrice ? `${parsePrice(draft.rawPrice).toLocaleString('ru-RU')} ₽` : draft.price,
+      moderationStatus: 'На модерации',
+      updatedAt: new Date().toLocaleString('ru-RU'),
+    };
+    delete updated.rawPrice;
+    onUpdate(updated);
+    setEditingId(null);
+    setDraft(null);
+  }
+
+  return (
+    <section className="account-section" id="cabinet">
+      <div className="section-head section-head--stacked">
+        <div>
+          <span className="eyebrow"><UserRound size={15} /> Личный кабинет питомника</span>
+          <h2>Мои объявления</h2>
+        </div>
+        <p>Здесь заводчик видит свои карточки, может отредактировать данные, изменить цену, статус щенка или удалить объявление. После редактирования карточка снова уходит на модерацию.</p>
+      </div>
+
+      <div className="dashboard-grid">
+        <div className="dashboard-card"><strong>{myAds.length}</strong><span>всего моих объявлений</span></div>
+        <div className="dashboard-card"><strong>{myAds.filter((ad) => ad.moderationStatus === 'На модерации').length}</strong><span>на модерации</span></div>
+        <div className="dashboard-card"><strong>{myAds.filter((ad) => ad.moderationStatus === 'Опубликовано').length}</strong><span>опубликовано</span></div>
+        <div className="dashboard-card"><strong>{myAds.filter((ad) => ad.moderationStatus === 'Отклонено').length}</strong><span>нужно исправить</span></div>
+      </div>
+
+      {myAds.length === 0 ? (
+        <div className="empty-state">
+          <PawPrint size={34} />
+          <h3>У вас пока нет объявлений</h3>
+          <p>Заполните форму выше — карточка появится здесь и отправится администратору на проверку.</p>
+          <a className="primary-btn" href="#kennels">Разместить щенка</a>
+        </div>
+      ) : (
+        <div className="account-list">
+          {myAds.map((puppy) => editingId === puppy.id && draft ? (
+            <form className="edit-form" key={puppy.id} onSubmit={saveDraft}>
+              <div className="edit-form__head">
+                <h3>Редактирование объявления</h3>
+                <ModerationBadge value={puppy.moderationStatus} />
+              </div>
+              <label><span>Кличка</span><input value={draft.name} onChange={(e) => updateDraft('name', e.target.value)} /></label>
+              <label><span>Порода</span><select value={draft.breed} onChange={(e) => updateDraft('breed', e.target.value)}>{breedCatalog.map((breed) => <option key={breed.name}>{breed.name}</option>)}</select></label>
+              <label><span>Город</span><select value={draft.city} onChange={(e) => updateDraft('city', e.target.value)}>{cities.map((city) => <option key={city}>{city}</option>)}</select></label>
+              <label><span>Пол</span><select value={draft.sex} onChange={(e) => updateDraft('sex', e.target.value)}><option>Сука</option><option>Кобель</option></select></label>
+              <label><span>Возраст</span><input value={draft.age} onChange={(e) => updateDraft('age', e.target.value)} /></label>
+              <label><span>Вес</span><input value={draft.weight} onChange={(e) => updateDraft('weight', e.target.value)} /></label>
+              <label><span>Рост</span><input value={draft.height} onChange={(e) => updateDraft('height', e.target.value)} /></label>
+              <label><span>Окрас</span><input value={draft.color} onChange={(e) => updateDraft('color', e.target.value)} /></label>
+              <label className="wide"><span>Темперамент</span><input value={draft.temperament} onChange={(e) => updateDraft('temperament', e.target.value)} /></label>
+              <label><span>Цена, ₽</span><input value={draft.rawPrice} onChange={(e) => updateDraft('rawPrice', e.target.value)} /></label>
+              <label><span>Статус щенка</span><select value={draft.status} onChange={(e) => updateDraft('status', e.target.value)}>{statuses.map((status) => <option key={status}>{status}</option>)}</select></label>
+              <label className="wide"><span>Документы</span><input value={draft.documents} onChange={(e) => updateDraft('documents', e.target.value)} /></label>
+              <label><span>Питомник</span><input value={draft.kennel} onChange={(e) => updateDraft('kennel', e.target.value)} /></label>
+              <label><span>Телефон</span><input value={draft.phone} onChange={(e) => updateDraft('phone', e.target.value)} /></label>
+              <label><span>Telegram</span><input value={draft.telegram} onChange={(e) => updateDraft('telegram', e.target.value)} /></label>
+              <label className="wide"><span>Ссылка на фото</span><input value={draft.image} onChange={(e) => updateDraft('image', e.target.value)} /></label>
+              <div className="edit-actions wide">
+                <button className="primary-btn" type="submit"><Save size={18} /> Сохранить и отправить на модерацию</button>
+                <button className="outline-btn" type="button" onClick={() => { setEditingId(null); setDraft(null); }}>Отмена</button>
+              </div>
+            </form>
+          ) : (
+            <CompactAdCard
+              key={puppy.id}
+              puppy={puppy}
+              onOpen={onOpen}
+              actions={<>
+                <button className="soft-btn" type="button" onClick={() => startEdit(puppy)}><Edit3 size={16} /> Редактировать</button>
+                <button className="danger-btn" type="button" onClick={() => onDelete(puppy.id)}><Trash2 size={16} /> Удалить</button>
+              </>}
+            />
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function AdminPanel({ puppies, onUpdate, onDelete, onOpen }) {
+  const [statusFilter, setStatusFilter] = useState('Все');
+  const userAds = puppies.filter((puppy) => puppy.ownerType === 'user');
+  const visibleAds = userAds.filter((puppy) => statusFilter === 'Все' || puppy.moderationStatus === statusFilter);
+
+  function setModeration(puppy, moderationStatus) {
+    onUpdate({ ...puppy, moderationStatus, updatedAt: new Date().toLocaleString('ru-RU') });
+  }
+
+  return (
+    <section className="admin-section" id="admin">
+      <div className="section-head section-head--stacked">
+        <div>
+          <span className="eyebrow"><ShieldCheck size={15} /> Кабинет администратора</span>
+          <h2>Модерация объявлений</h2>
+        </div>
+        <p>Демо-админка для проверки карточек перед публикацией: можно одобрить, отклонить или удалить объявление. В реальной версии сюда добавим авторизацию, роли и журнал действий.</p>
+      </div>
+
+      <div className="admin-toolbar">
+        {['Все', 'На модерации', 'Опубликовано', 'Отклонено'].map((status) => (
+          <button key={status} type="button" className={statusFilter === status ? 'active' : ''} onClick={() => setStatusFilter(status)}>{status}</button>
+        ))}
+      </div>
+
+      <div className="dashboard-grid dashboard-grid--admin">
+        <div className="dashboard-card"><strong>{userAds.length}</strong><span>пользовательских объявлений</span></div>
+        <div className="dashboard-card"><strong>{userAds.filter((ad) => ad.moderationStatus === 'На модерации').length}</strong><span>ожидают проверки</span></div>
+        <div className="dashboard-card"><strong>{userAds.filter((ad) => ad.moderationStatus === 'Опубликовано').length}</strong><span>доступны в каталоге</span></div>
+        <div className="dashboard-card"><strong>{userAds.filter((ad) => ad.moderationStatus === 'Отклонено').length}</strong><span>отклонены</span></div>
+      </div>
+
+      {visibleAds.length === 0 ? (
+        <div className="empty-state empty-state--admin">
+          <ShieldCheck size={34} />
+          <h3>Нет объявлений в этом статусе</h3>
+          <p>Когда заводчик отправит карточку, она появится здесь на проверке.</p>
+        </div>
+      ) : (
+        <div className="admin-list">
+          {visibleAds.map((puppy) => (
+            <CompactAdCard
+              key={puppy.id}
+              puppy={puppy}
+              onOpen={onOpen}
+              actions={<>
+                <button className="approve-btn" type="button" onClick={() => setModeration(puppy, 'Опубликовано')}><Check size={16} /> Одобрить</button>
+                <button className="reject-btn" type="button" onClick={() => setModeration(puppy, 'Отклонено')}><Ban size={16} /> Отклонить</button>
+                <button className="danger-btn" type="button" onClick={() => onDelete(puppy.id)}><Trash2 size={16} /> Удалить</button>
+              </>}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 }
@@ -650,7 +853,7 @@ function GuidesSection() {
 
 function App() {
   const [puppies, setPuppies] = useState(() => {
-    const saved = localStorage.getItem('dream-pet-puppies-v7');
+    const saved = localStorage.getItem('dream-pet-puppies-v8');
     return saved ? JSON.parse(saved) : initialPuppies;
   });
   const [filters, setFilters] = useState({ breed: '', city: '', sex: '', maxPrice: '', size: '', activity: '', family: '', experience: '' });
@@ -668,7 +871,9 @@ function App() {
     return scored.sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
   }, [filters.size, filters.activity, filters.family, filters.experience]);
 
-  const filteredPuppies = useMemo(() => puppies.filter((puppy) => {
+  const publicPuppies = useMemo(() => puppies.filter((puppy) => (puppy.moderationStatus || 'Опубликовано') === 'Опубликовано'), [puppies]);
+
+  const filteredPuppies = useMemo(() => publicPuppies.filter((puppy) => {
     const maxPrice = parsePrice(filters.maxPrice);
     const puppyPrice = parsePrice(puppy.price);
     const hasHelper = filters.size || filters.activity || filters.family || filters.experience;
@@ -678,13 +883,26 @@ function App() {
       && (!filters.sex || puppy.sex === filters.sex)
       && (!maxPrice || puppyPrice <= maxPrice)
       && (filters.breed || !hasHelper || recommendedNames.has(puppy.breed));
-  }), [puppies, filters, recommendedBreeds]);
+  }), [publicPuppies, filters, recommendedBreeds]);
+
+  function savePuppies(next) {
+    setPuppies(next);
+    localStorage.setItem('dream-pet-puppies-v8', JSON.stringify(next));
+  }
 
   function addPuppy(puppy) {
     const next = [puppy, ...puppies];
-    setPuppies(next);
-    localStorage.setItem('dream-pet-puppies-v7', JSON.stringify(next));
-    document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' });
+    savePuppies(next);
+    document.getElementById('cabinet')?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function updatePuppy(updatedPuppy) {
+    savePuppies(puppies.map((puppy) => puppy.id === updatedPuppy.id ? updatedPuppy : puppy));
+  }
+
+  function deletePuppy(id) {
+    savePuppies(puppies.filter((puppy) => puppy.id !== id));
+    if (selectedPuppy?.id === id) setSelectedPuppy(null);
   }
 
   return (
@@ -707,6 +925,8 @@ function App() {
           </div>
         </section>
         <KennelForm onAdd={addPuppy} />
+        <MyAccount puppies={puppies} onUpdate={updatePuppy} onDelete={deletePuppy} onOpen={setSelectedPuppy} />
+        <AdminPanel puppies={puppies} onUpdate={updatePuppy} onDelete={deletePuppy} onOpen={setSelectedPuppy} />
         <GuidesSection />
       </div>
       <PuppyModal puppy={selectedPuppy} onClose={() => setSelectedPuppy(null)} />
