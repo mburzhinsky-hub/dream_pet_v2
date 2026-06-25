@@ -26,11 +26,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          registry-url: "https://registry.npmjs.org/"
 
-      - name: Install project dependencies
+      - name: Force public npm registry
+        run: |
+          npm config set registry https://registry.npmjs.org/
+          npm config get registry
+
+      - name: Install dependencies
         run: |
           rm -rf node_modules
-          npm install vite@latest @vitejs/plugin-react@latest react@latest react-dom@latest lucide-react@latest
+          rm -f package-lock.json
+          npm install --no-package-lock --no-audit --no-fund
 
       - name: Build
         run: npx vite build
