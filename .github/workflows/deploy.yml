@@ -27,11 +27,13 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install project dependencies
+        run: |
+          rm -rf node_modules
+          npm install vite@latest @vitejs/plugin-react@latest react@latest react-dom@latest lucide-react@latest
 
       - name: Build
-        run: npm run build
+        run: npx vite build
 
       - name: Disable Jekyll
         run: touch dist/.nojekyll
