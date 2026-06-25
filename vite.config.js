@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/dream_pet_v2/'
+  base: '/dream_pet/'
 })
