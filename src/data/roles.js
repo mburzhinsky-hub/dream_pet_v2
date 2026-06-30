@@ -27,10 +27,13 @@ export const routeAccess = {
   '/': ['visitor', 'buyer', 'kennel', 'admin'],
   '/catalog': ['visitor', 'buyer', 'kennel', 'admin'],
   '/puppy': ['visitor', 'buyer', 'kennel', 'admin'],
+  '/login': ['visitor', 'buyer', 'kennel', 'admin'],
+  '/register': ['visitor', 'buyer', 'kennel', 'admin'],
   '/kennels': ['kennel', 'admin'],
   '/account': ['kennel', 'admin'],
   '/admin': ['admin'],
   '/guides': ['visitor', 'buyer', 'kennel', 'admin'],
+  '/404': ['visitor', 'buyer', 'kennel', 'admin'],
 };
 
 export function canAccessRoute(role, routeName) {

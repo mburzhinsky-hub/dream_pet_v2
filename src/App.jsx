@@ -9,6 +9,9 @@ import { AccountPage } from './pages/AccountPage.jsx';
 import { AdminPage } from './pages/AdminPage.jsx';
 import { CatalogPage } from './pages/CatalogPage.jsx';
 import { GuidesPage } from './pages/GuidesPage.jsx';
+import { LoginPage } from './pages/LoginPage.jsx';
+import { NotFoundPage } from './pages/NotFoundPage.jsx';
+import { RegisterPage } from './pages/RegisterPage.jsx';
 import { HomePage } from './pages/HomePage.jsx';
 import { KennelPage } from './pages/KennelPage.jsx';
 import { PuppyDetailsPage } from './pages/PuppyDetailsPage.jsx';
@@ -30,6 +33,10 @@ export function App() {
         return <CatalogPage {...pageProps} />;
       case '/puppy':
         return <PuppyDetailsPage puppy={puppyStore.findPuppy(route.puppyId)} />;
+      case '/login':
+        return <LoginPage role={role} onRoleChange={setRole} />;
+      case '/register':
+        return <RegisterPage onRoleChange={setRole} />;
       case '/kennels':
         return <KennelPage onAdd={puppyStore.addPuppy} />;
       case '/account':
@@ -39,8 +46,10 @@ export function App() {
       case '/guides':
         return <GuidesPage />;
       case '/':
-      default:
         return <HomePage {...pageProps} />;
+      case '/404':
+      default:
+        return <NotFoundPage path={route.path} />;
     }
   }
 

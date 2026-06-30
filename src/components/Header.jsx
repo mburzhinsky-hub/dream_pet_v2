@@ -30,9 +30,10 @@ export function Header({ role, onRoleChange }) {
           <a href="#/catalog">Каталог щенков</a>
           <a href="#/">Подобрать породу</a>
           <a href="#/kennels">Питомникам</a>
-          <a href="#/account">Мои объявления</a>
-          <a href="#/admin">Админ</a>
+          <a href="#/account">Кабинет</a>
+          <a href="#/admin">Админка</a>
           <a href="#/guides">Гиды</a>
+          <a href="#/login">Вход</a>
         </nav>
 
         <div className="header-actions">
@@ -43,7 +44,7 @@ export function Header({ role, onRoleChange }) {
             </select>
           </label>
           <button className="icon-btn" type="button" aria-label="Избранное"><Heart size={20} /></button>
-          <a className="icon-btn" href="#/account" aria-label="Профиль"><UserRound size={20} /></a>
+          <a className="icon-btn" href="#/login" aria-label="Профиль"><UserRound size={20} /></a>
           <a className="primary-btn primary-btn--small" href="#/kennels">Разместить щенка</a>
           <button className="mobile-menu" type="button" aria-label="Меню"><Menu size={22} /></button>
         </div>
