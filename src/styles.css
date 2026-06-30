@@ -1381,3 +1381,55 @@ h1, h2, h3, p { margin: 0; }
     grid-template-columns: 1fr;
   }
 }
+
+/* Task 1.8: selected breed information from src/data/breeds.js */
+.selected-breed-info {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 12px;
+  margin-top: 6px;
+  padding: 18px 20px;
+  border-radius: 24px;
+  border: 1px solid rgba(201, 140, 31, .18);
+  background: #fffaf2;
+  box-shadow: 0 16px 38px rgba(91, 61, 22, .07);
+}
+.selected-breed-info__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.selected-breed-info__head span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #8d641c;
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.selected-breed-info__head strong {
+  font-size: 20px;
+  letter-spacing: -.03em;
+}
+.selected-breed-info p {
+  color: var(--muted);
+  line-height: 1.65;
+}
+.selected-breed-info__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.selected-breed-info__facts span {
+  padding: 8px 11px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--line);
+  color: #6a4a18;
+  font-size: 12px;
+  font-weight: 900;
+}

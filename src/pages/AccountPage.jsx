@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { Edit3, PawPrint, Save, Trash2, UserRound } from 'lucide-react';
 import { CompactAdCard } from '../components/CompactAdCard.jsx';
 import { ModerationBadge } from '../components/ModerationBadge.jsx';
-import { breedCatalog, cities, statuses } from '../data/catalog.js';
+import { breedCatalog } from '../data/breeds.js';
+import { cities } from '../data/cities.js';
+import { statuses } from '../data/statuses.js';
 import { markForModeration } from '../services/puppyModeration.js';
 import { parsePrice } from '../utils/price.js';
 

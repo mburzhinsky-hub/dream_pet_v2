@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { breedCatalog } from '../data/catalog.js';
+import { breedCatalog } from '../data/breeds.js';
 import { parsePrice } from '../utils/price.js';
 
 export const defaultFilters = {

@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Bone, Camera, Info, Send, UploadCloud } from 'lucide-react';
-import { breedCatalog, cities, DEFAULT_IMAGE, statuses } from '../data/catalog.js';
+import { DEFAULT_IMAGE } from '../data/catalog.js';
+import { breedCatalog } from '../data/breeds.js';
+import { cities } from '../data/cities.js';
+import { statuses } from '../data/statuses.js';
 import { parsePrice } from '../utils/price.js';
 
 const emptyForm = {

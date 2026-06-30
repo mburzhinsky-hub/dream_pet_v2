@@ -1,5 +1,5 @@
 import { BadgeCheck, ChevronRight, Heart, MessageCircle, ShieldCheck, Stethoscope } from 'lucide-react';
-import { breedCatalog, breedIcons, breedImages, fallbackBreedImage } from '../data/catalog.js';
+import { breedCatalog, breedIcons, breedImages, fallbackBreedImage } from '../data/breeds.js';
 
 export function BreedsAndBenefits() {
   const benefits = [
