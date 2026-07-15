@@ -1,33 +1,39 @@
-import { Heart, ShieldCheck, Sparkles } from 'lucide-react';
+import { CheckCircle2, PawPrint, Search, ShieldCheck, Sparkles, Star } from 'lucide-react';
 import { heroImage } from '../data/catalog.js';
 
 export function Hero() {
+  function scrollToHelper() {
+    document.getElementById('breed-helper')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
   return (
     <section className="hero" id="top">
-      <div className="hero-copy reveal">
-        <div className="eyebrow"><Sparkles size={16} /> Маркетплейс проверенных помётов</div>
-        <h1>Найдите щенка, <span>который подходит именно вам</span></h1>
-        <p>Проверенные питомники, здоровые щенки и полная поддержка на каждом этапе — от первого просмотра карточки до переезда домой.</p>
-
-        <div className="hero-stats" aria-label="Статистика Dream Pet">
-          <div><strong>2 500+</strong><span>щенков</span></div>
-          <div><strong>280+</strong><span>питомников</span></div>
-          <div><strong>56</strong><span>городов</span></div>
-          <div><strong>98%</strong><span>довольных клиентов</span></div>
+      <div className="hero__inner">
+        <div className="hero-copy reveal">
+          <div className="eyebrow"><ShieldCheck size={16} /> Маркетплейс проверенных щенков</div>
+          <h1>Найдите щенка, <span>который подходит</span> именно вам</h1>
+          <p>Проверенные питомники, понятные документы и поддержка на каждом этапе выбора.</p>
+          <div className="hero-actions">
+            <a className="primary-btn" href="#/catalog"><PawPrint size={19} /> Смотреть щенков</a>
+            <button className="outline-btn" type="button" onClick={scrollToHelper}><Search size={19} /> Подобрать породу</button>
+          </div>
+          <div className="hero-proof" aria-label="Преимущества площадки">
+            <span><CheckCircle2 size={16} /> Актуальные карточки</span>
+            <span><CheckCircle2 size={16} /> Прямой контакт</span>
+          </div>
         </div>
-      </div>
 
-      <div className="hero-visual reveal reveal--delay">
-        <div className="hero-glow" />
-        <img className="hero-dog" src={heroImage} alt="Счастливый щенок Dream Pet" />
-        <div className="trust-card trust-card--families">
-          <div className="avatar-stack"><span /><span /><span /></div>
-          <div><strong>Более 10 000 семей</strong><small>уже нашли своего друга</small></div>
-          <Heart size={18} fill="currentColor" />
-        </div>
-        <div className="trust-card trust-card--verify">
-          <ShieldCheck size={22} />
-          <div><strong>Проверенные заводчики</strong><small>документы и актуальные карточки</small></div>
+        <div className="hero-visual reveal reveal--delay">
+          <img className="hero-dog" src={heroImage} alt="Золотистый ретривер на светлой террасе" />
+          <div className="trust-card trust-card--verify">
+            <span className="trust-card__icon"><ShieldCheck size={23} /></span>
+            <div><strong>280+ питомников</strong><small>единый стандарт карточек</small></div>
+          </div>
+          <div className="trust-card trust-card--rating">
+            <span className="trust-card__icon"><Star size={22} fill="currentColor" /></span>
+            <div><strong>98% довольных семей</strong><small>поддержка при выборе</small></div>
+          </div>
+          <span className="hero-spark hero-spark--one" aria-hidden="true"><Sparkles size={19} /></span>
         </div>
       </div>
     </section>
