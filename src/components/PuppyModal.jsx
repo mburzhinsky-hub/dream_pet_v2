@@ -1,5 +1,6 @@
 import { MessageCircle, PawPrint, Phone, X } from 'lucide-react';
 import { DEFAULT_IMAGE } from '../data/catalog.js';
+import { replaceBrokenDogImage } from '../utils/imageFallback.js';
 
 export function PuppyModal({ puppy, onClose }) {
   if (!puppy) return null;
@@ -12,7 +13,12 @@ export function PuppyModal({ puppy, onClose }) {
     <div className="modal-backdrop" role="dialog" aria-modal="true" onMouseDown={onClose}>
       <div className="modal-card" onMouseDown={(e) => e.stopPropagation()}>
         <button className="modal-close" type="button" onClick={onClose} aria-label="Закрыть"><X size={22} /></button>
-        <img className="modal-photo" src={puppy.image || DEFAULT_IMAGE} alt={`${puppy.name}, ${puppy.breed}`} />
+        <img
+          className="modal-photo"
+          src={puppy.image || DEFAULT_IMAGE}
+          alt={`${puppy.name}, ${puppy.breed}`}
+          onError={(event) => replaceBrokenDogImage(event, puppy.id || puppy.breed)}
+        />
         <div className="modal-info">
           <span className="eyebrow"><PawPrint size={15} /> Карточка щенка</span>
           <h2>{puppy.name}</h2>
