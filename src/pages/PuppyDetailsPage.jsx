@@ -1,5 +1,6 @@
 import { ArrowLeft, MessageCircle, PawPrint, Phone } from 'lucide-react';
 import { DEFAULT_IMAGE } from '../data/catalog.js';
+import { replaceBrokenDogImage } from '../utils/imageFallback.js';
 
 export function PuppyDetailsPage({ puppy }) {
   if (!puppy) {
@@ -33,7 +34,12 @@ export function PuppyDetailsPage({ puppy }) {
     <section className="page-shell routed-page puppy-details-page">
       <a className="back-link" href="#/catalog"><ArrowLeft size={18} /> Назад в каталог</a>
       <article className="details-card">
-        <img className="details-photo" src={puppy.image || DEFAULT_IMAGE} alt={`${puppy.name}, ${puppy.breed}`} />
+        <img
+          className="details-photo"
+          src={puppy.image || DEFAULT_IMAGE}
+          alt={`${puppy.name}, ${puppy.breed}`}
+          onError={(event) => replaceBrokenDogImage(event, puppy.id || puppy.breed)}
+        />
         <div className="details-info">
           <span className="eyebrow"><PawPrint size={15} /> Детальная карточка щенка</span>
           <h1>{puppy.name}</h1>
