@@ -1,5 +1,6 @@
 import { BadgeCheck, ChevronRight, Heart, MessageCircle, ShieldCheck, Stethoscope } from 'lucide-react';
-import { breedCatalog, breedIcons, breedImages, fallbackBreedImage } from '../data/breeds.js';
+import { breedCatalog, breedIcons, breedImages } from '../data/breeds.js';
+import { replaceBrokenDogImage } from '../utils/imageFallback.js';
 
 export function BreedsAndBenefits() {
   const benefits = [
@@ -20,7 +21,11 @@ export function BreedsAndBenefits() {
           {breedCatalog.map((breed) => (
             <button className="breed-item" type="button" key={breed.name} onClick={() => document.getElementById('breed-helper')?.scrollIntoView({ behavior: 'smooth' })}>
               <span className="breed-icon" aria-hidden="true">{breedIcons[breed.name] || '🐾'}</span>
-              <img src={breedImages[breed.name] || fallbackBreedImage} alt={breed.short} />
+              <img
+                src={breedImages[breed.name]}
+                alt={breed.short}
+                onError={(event) => replaceBrokenDogImage(event, breed.id || breed.name)}
+              />
               <strong>{breed.short}</strong>
               <span>{breed.count}</span>
             </button>
