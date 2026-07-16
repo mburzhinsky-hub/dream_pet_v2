@@ -1,5 +1,6 @@
 import { Heart, Home, MapPin } from 'lucide-react';
 import { breedIcons, DEFAULT_IMAGE } from '../data/catalog.js';
+import { replaceBrokenDogImage } from '../utils/imageFallback.js';
 
 export function PuppyCard({ puppy, onOpen }) {
   const statusClass = puppy.status === 'Продан' ? 'sold' : puppy.status === 'Бронь' ? 'booked' : 'free';
@@ -7,7 +8,11 @@ export function PuppyCard({ puppy, onOpen }) {
   return (
     <article className="puppy-card reveal-card">
       <div className="puppy-photo">
-        <img src={puppy.image || DEFAULT_IMAGE} alt={`${puppy.name}, ${puppy.breed}`} />
+        <img
+          src={puppy.image || DEFAULT_IMAGE}
+          alt={`${puppy.name}, ${puppy.breed}`}
+          onError={(event) => replaceBrokenDogImage(event, puppy.id || puppy.breed)}
+        />
         <span className={`status ${statusClass}`}>{puppy.status}</span>
         <button className="favorite" type="button" aria-label="Добавить в избранное"><Heart size={19} /></button>
       </div>
