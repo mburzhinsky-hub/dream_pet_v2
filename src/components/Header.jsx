@@ -10,6 +10,17 @@ export function Header({ role, onRoleChange }) {
     setMenuOpen(false);
   }
 
+  function openBreedHelper(event) {
+    event.preventDefault();
+    closeMenu();
+    window.location.hash = '/';
+    window.setTimeout(() => {
+      const helper = document.getElementById('breed-helper');
+      if (helper) helper.open = true;
+      helper?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 80);
+  }
+
   return (
     <div className="header-stage">
       <header className="site-header">
@@ -23,7 +34,7 @@ export function Header({ role, onRoleChange }) {
 
         <nav className={`main-nav ${menuOpen ? 'main-nav--open' : ''}`} aria-label="Главная навигация">
           <a href="#/catalog" onClick={closeMenu}>Каталог</a>
-          <a href="#/#breed-helper" onClick={closeMenu}>Подбор породы</a>
+          <a href="#/" onClick={openBreedHelper}>Подбор породы</a>
           <a href="#/guides" onClick={closeMenu}>Как мы проверяем</a>
           <a href="#/guides" onClick={closeMenu}>Гиды</a>
           <a href="#/account" onClick={closeMenu}>Кабинет</a>
