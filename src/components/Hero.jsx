@@ -2,6 +2,16 @@ import { PawPrint, Search, ShieldCheck, Star } from 'lucide-react';
 import { heroImage } from '../data/catalog.js';
 
 export function Hero() {
+  function openBreedHelper(event) {
+    event.preventDefault();
+    window.location.hash = '/';
+    window.setTimeout(() => {
+      const helper = document.getElementById('breed-helper');
+      if (helper) helper.open = true;
+      helper?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 80);
+  }
+
   return (
     <section className="hero" id="top">
       <div className="hero-backdrop" aria-hidden="true">
@@ -14,7 +24,7 @@ export function Hero() {
         <p>Проверенные питомники, понятные документы и поддержка на каждом этапе выбора.</p>
         <div className="hero-actions">
           <a className="primary-btn" href="#/catalog"><PawPrint size={18} /> Смотреть щенков</a>
-          <a className="outline-btn" href="#/#breed-helper"><Search size={18} /> Подобрать породу</a>
+          <a className="outline-btn" href="#/" onClick={openBreedHelper}><Search size={18} /> Подобрать породу</a>
         </div>
       </div>
 
